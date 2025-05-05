@@ -1,6 +1,7 @@
 import { IsString,IsUppercase } from "class-validator";
 import { Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,DeleteDateColumn, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 import { order } from "./order";
+import { outlet } from "./outlet";
 
 
 @Entity()
@@ -53,6 +54,10 @@ export class transaction{
     @JoinColumn()
     public orders : order
 
+
+    @ManyToOne(() => outlet,(outlets) => outlets.transactions)
+    @JoinColumn()
+    public outlets : outlet
 
 
 
