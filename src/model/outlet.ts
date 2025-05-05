@@ -2,6 +2,7 @@ import { IsString,IsUppercase } from "class-validator";
 import { Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,DeleteDateColumn, OneToMany } from "typeorm";
 import { user } from "./user";
 import { menu } from "./menu";
+import { transaction } from "./transaction";
 
 
 @Entity()
@@ -57,6 +58,9 @@ export class outlet{
     
     @OneToMany (() => menu, (menus) => menus.outlets)
     public menus : menu
+
+    @OneToMany (() => transaction, (transactions) => transactions.outlets)
+    public transactions : transaction
 
 
 
