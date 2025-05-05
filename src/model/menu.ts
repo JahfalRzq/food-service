@@ -1,6 +1,7 @@
 import { IsString,IsUppercase } from "class-validator";
 import { Entity,PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,DeleteDateColumn, OneToMany, ManyToMany, ManyToOne, JoinColumn } from "typeorm";
 import { outlet } from "./outlet";
+import { listPesanan } from "./listPesanan";
 
 export enum menuType{
     MAINCOURSE = 'MAINCOURSE',
@@ -22,6 +23,13 @@ export class menu{
     })
     @IsString()
     public nameMenu: string
+
+    @Column({
+        default: null,
+        nullable: true
+    })
+    @IsString()
+    public priceMenu: string
 
     @Column({
         type: 'enum',
@@ -58,6 +66,9 @@ export class menu{
     @ManyToOne (() => outlet, (outlets) => outlets.menus)
     @JoinColumn()
     public outlets : outlet
+
+    @OneToMany(() => listPesanan,(lists) => lists.menus)
+    public lists : listPesanan
 
 
 }
