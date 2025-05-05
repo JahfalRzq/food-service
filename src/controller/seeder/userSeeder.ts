@@ -1,22 +1,22 @@
 import { Request, Response } from "express";
 import Joi from "joi";
 import { AppDataSource } from "../../data-source";
-import { User, UserRole } from "../../model/user";
+import { user, UserRole } from "../../model/user";
 import { encrypt } from "../../utils/CryptoData";
 
 const { successResponse, errorResponse, validationResponse } = require('../../utils/response')
 
 
-const userRepository = AppDataSource.getRepository(User)
+const userRepository = AppDataSource.getRepository(user)
 
 
 export const userSeeder = async (req: Request, res: Response) => {
-    const user = [
-        {userName : "Admin1",password : "Admin123!",UserRole : "ADMIN"},
+    const User = [
+        {userName : "superAdmin1",password : "superAdmin123!",UserRole : "SUPERADMIN"},
     ];
     try{
-        for (const data of user){
-            const newUser = new User()
+        for (const data of User){
+            const newUser = new user()
             newUser.userName = data.userName
             newUser.password =  data.password
             newUser.password = encrypt(data.password); // Menggunakan fungsi encrypt  

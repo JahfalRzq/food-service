@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../../../data-source";
 import Joi, { required } from "joi";
-import { User, UserRole } from "../../../model/user";
+import { user, UserRole } from "../../../model/user";
 import { encrypt,decrypt } from "../../../utils/CryptoData";
 import multer from 'multer';  
 import path from 'path';  
@@ -11,7 +11,7 @@ import path from 'path';
 const { joiPasswordExtendCore } = require('joi-password')
 const joiPassword = Joi.extend(joiPasswordExtendCore)
 const { successResponse, errorResponse, validationResponse } = require('../../../utils/response')
-const userRepository = AppDataSource.getRepository(User)
+const userRepository = AppDataSource.getRepository(user)
 
 const storage = multer.diskStorage({    
     destination: (req, file, cb) => {    
@@ -50,10 +50,10 @@ export const createUser = async (req : Request, res: Response) =>{
         //     return res.status(422).send(validationResponse(schema))
         // }
 
-        const user = await userRepository.findOneBy({ id: req.jwtPayload.id })
+        const User = await userRepository.findOneBy({ id: req.jwtPayload.id })
 
        // Validasi role pengguna yang sedang login  
-       if (!user || user.role !== 'ADMIN') {  
+       if (!User || User.role !== 'ADMIN') {  
         return res.status(403).send(errorResponse('Access Denied: Only ADMIN can create users', 403));  
     }  
 
@@ -63,7 +63,7 @@ export const createUser = async (req : Request, res: Response) =>{
               return res.status(400).json({ message: 'Username already exists' });
           }
 
-        const NewUser = new User()
+        const NewUser = new user()
         NewUser.namaLengkap = body.namaLengkap
         NewUser.userName = body.userName
         NewUser.password = encrypt(body.password); // Menggunakan fungsi encrypt  
