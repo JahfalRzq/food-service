@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../../model/user";
+import { user } from "../../model/user";
 import { AppDataSource } from "../../data-source";
 import { JwtPayload } from "../../types/JwtPayload";
 import { createJwtToken } from "../../utils/createJwtToken";
@@ -7,7 +7,7 @@ import { decrypt } from "../../utils/CryptoData";
 
 const { successResponse, errorResponse, validationResponse } = require('../../utils/response')
 
-const userRepository = AppDataSource.getRepository(User)
+const userRepository = AppDataSource.getRepository(user)
 
 
 export const fetch = async (req: Request, res: Response) => {
