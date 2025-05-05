@@ -18,6 +18,21 @@ export class order{
     @IsString()
     public qris_invoiceid: string
 
+        
+    @Column({
+        default: null,
+        nullable: true
+    })
+    @IsString()
+    public no_pesanan: string
+
+    @Column({
+        default: null,
+        nullable: true
+    })
+    @IsString()
+    public no_meja: string
+
     
 
     @CreateDateColumn()
@@ -29,8 +44,6 @@ export class order{
     @DeleteDateColumn()
     public deletedAt: Date
 
-    
-        
     @OneToMany (() => transaction, (transactions) => transactions.orders)
     public transactions : transaction
 
